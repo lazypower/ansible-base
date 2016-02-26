@@ -1,4 +1,0 @@
-name: ansible-base
-summary: A base layer for juju
-description: | 
-    Deliver the Ansible runtime so charm layers can consume ansible CM tooling

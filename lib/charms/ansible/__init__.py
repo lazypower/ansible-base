@@ -118,7 +118,7 @@ ansible_hosts_path = '/etc/ansible/hosts'
 ansible_vars_path = '/etc/ansible/host_vars/localhost'
 
 
-def install_ansible_support(from_ppa=True, ppa_location='ppa:rquillo/ansible'):
+def install_ansible_support(from_ppa=True, ppa_location='ppa:ansible/ansible'):
     """Installs the ansible package.
 
     By default it is installed from the `PPA`_ linked from
@@ -143,6 +143,7 @@ def apply_playbook(playbook, tags=None, extra_vars=None):
     # This may not be desireable long term, TODO: investigate this
     tags = tags or get_states().keys()
     tags = ",".join(tags)
+    tags = "{},{}".format(tags, os.getenv('JUJU_HOOK_NAME'))
     # translate system state to YAML inventory.
     host.juju_state_to_yaml(
         ansible_vars_path, namespace_separator='__',
