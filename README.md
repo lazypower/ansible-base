@@ -12,7 +12,9 @@ the inconsistency due to how Ansible handles tags.
 
 To schedule a play to run during hook execution, leverage a charm state.
 
-    charms.reactive.set_state('ansible.available')
+@when('ansible.available')
+def run_install_and_configure():
+    set_state('cowsay')
     charms.ansible.apply_playbook('playbook.yaml')
 
 Then in the corresponding playbook:
@@ -20,7 +22,7 @@ Then in the corresponding playbook:
     - name: do something when ansible.available
       command: cowsay ansible is available
       tags:
-        - ansible.available
+        - cowsay
 
 Anytime the state of ansible.available occurs, the playbook will be executed.
 
@@ -30,4 +32,5 @@ they will need to be handled by the associated layer's calling hook code.
 ### Credit
 
 This layer and library are heavilly influenced by the work of Michael Nelson.
-Special thanks to mnelson and contributors to make this layer a reality.
+Special thanks to mnelson and contributors to make this layer a reality. Which
+serves as the basis for charms.ansible
